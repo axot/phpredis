@@ -1441,6 +1441,9 @@ PHP_REDIS_API short cluster_send_command(redisCluster *c, short slot, const char
     } else if (timedout) {
         zend_throw_exception(redis_cluster_exception_ce,
             "Timed out attempting to find data in the correct node!", 0 TSRMLS_CC);
+    } else if (resp == -1) {
+        zend_throw_exception(redis_cluster_exception_ce,
+            "Critical error occured", 0 TSRMLS_CC);
     }
 
     /* Clear redirection flag */
